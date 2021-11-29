@@ -12,6 +12,6 @@ a timer that counts down when you start the quiz. Evey time you get a question r
 
 ## Directions
 
-*Click start button
-*Answer all questions that are given in the certain amount of time
-*at the end of the quiz enter your initials to be put on the leaderboard
+* Click start button
+* Answer all questions that are given in the certain amount of time
+* at the end of the quiz enter your initials to be put on the leaderboard
