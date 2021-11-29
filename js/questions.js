@@ -42,6 +42,13 @@ var button4 = document.querySelector("#button-4");
 var questionEl = document.querySelector("#question");
 var currentQuestion = 0;
 var buttonArray = []
+var timeInterval;
+var timeLeft = 50;
+var scoreDiv = document.querySelector("#scoreDiv");
+var initials = document.querySelector("#initials");
+var saveScore = document.querySelector("#saveScore");
+var userScore = document.querySelector("#userScore");
+var mainDiv = document.querySelector("#mainDiv");
 
 buttonArray.push(button1);
 buttonArray.push(button2);
@@ -49,16 +56,16 @@ buttonArray.push(button3);
 buttonArray.push(button4);
 
 function startGame() {
+    mainDiv.classList.remove("hidden");
     showQuestion();
     countDown();
 }
 
 // timer variables
 function countDown() {
-    var timeLeft = 75;
   
     // Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
-    var timeInterval = setInterval(function () {
+    timeInterval = setInterval(function () {
       // As long as the `timeLeft` is greater than 1
       if (timeLeft > 1) {
         // Set the `textContent` of `timerEl` to show the remaining seconds
@@ -89,10 +96,10 @@ function showQuestion() {
 
 function checkAnswer(userChoice) {
     if (questions[currentQuestion].answer === userChoice) {
-
+        score++
     }
     else {
-
+        timeLeft-=10;
     }
     currentQuestion++
     getNextQuestion();
@@ -107,9 +114,23 @@ function getNextQuestion() {
 }
  
 }
-
+var highScores = [];
+if (localStorage.getItem("highScores")) {
+    highScores = JSON.parse(localStorage.getItem("highScores"));
+}
 function endGame() {
+    mainDiv.classList.add("hidden");
+    userScore.innerText = "Your score is: " + score;
     console.log("end game");
+    clearInterval(timeInterval);
+    scoreDiv.classList.remove("hidden");
+    saveScore.addEventListener("click", function() {
+        var object = {
+            initials: initials.value, score: score
+        }
+        highScores.push(object);
+        localStorage.setItem("highScores", JSON.stringify(highScores));
+    })
 }
 
 startTime.addEventListener("click", function(){
